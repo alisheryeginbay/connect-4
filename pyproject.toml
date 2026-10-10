@@ -1,0 +1,23 @@
+[project]
+name = "connect4"
+version = "0.1.0"
+description = "Othello-GPT style world-model experiments on Connect 4"
+readme = "README.md"
+authors = [
+    { name = "Alisher Yeginbay", email = "alisher@yeginbay.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "modal>=1.6.1",
+    "numpy>=2.5.3",
+    "torch>=2.14.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.22,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
