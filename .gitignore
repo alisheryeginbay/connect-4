@@ -6,6 +6,7 @@ dist/
 *.egg-info/
 .pytest_cache/
 
-# generated datasets and checkpoints
+# generated datasets, checkpoints and training runs
 data/
 checkpoints/
+runs/
