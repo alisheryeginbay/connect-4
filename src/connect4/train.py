@@ -1,8 +1,8 @@
 """Train the GPT to predict the next token of random Connect 4 games.
 
 Usage (local smoke test):
-    uv run python -m connect4.generate --n 100000 --out data/games.npy
-    uv run python -m connect4.train --data data/games.npy --out runs/smoke --epochs 1 --small
+    uv run python -m connect4.generate --n 100000 --out data/smoke/shard_0000000.npy
+    uv run python -m connect4.train --data data/smoke --out runs/smoke --epochs 1 --small
 """
 
 import argparse
@@ -19,6 +19,7 @@ import torch.nn.functional as F
 
 from connect4.game import Game
 from connect4.generate import PAD as MOVE_PAD
+from connect4.generate import load_games
 from connect4.model import GPT, ModelConfig
 from connect4.tokenizer import END, PAD, VOCAB_SIZE, encode
 
@@ -102,7 +103,7 @@ def train(cfg: TrainConfig, model_cfg: ModelConfig = ModelConfig()) -> None:
     out = Path(cfg.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    games = np.load(cfg.data)
+    games = load_games(cfg.data)  # a .npy file or a directory of shards
     val_games, train_games = games[: cfg.val_games], games[cfg.val_games :]
     # The whole dataset fits on the GPU (5M games is ~220 MB), so batches are just index slices.
     train_tokens = torch.from_numpy(encode(train_games, cfg.end_token)).long().to(device)
