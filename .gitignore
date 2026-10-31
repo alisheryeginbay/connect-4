@@ -10,3 +10,6 @@ dist/
 data/
 checkpoints/
 runs/
+
+# Jupyter autosaves
+.ipynb_checkpoints/
